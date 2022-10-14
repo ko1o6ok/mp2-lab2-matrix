@@ -1,6 +1,6 @@
 #include "tmatrix.h"
 
-#include <gtest.h>
+#include "gtest/gtest.h"
 
 TEST(TDynamicVector, can_create_vector_with_positive_length)
 {
@@ -26,12 +26,19 @@ TEST(TDynamicVector, can_create_copied_vector)
 
 TEST(TDynamicVector, copied_vector_is_equal_to_source_one)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[2] = 1; v1[5]=-7;
+    auto v2 = TDynamicVector<int>(v1);
+    ASSERT_EQ(v1,v2);
 }
 
 TEST(TDynamicVector, copied_vector_has_its_own_memory)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    auto v2 = TDynamicVector<int>(v1);
+    v1[3] = 1;
+    ASSERT_NE(v1[3],v2[3]);
 }
 
 TEST(TDynamicVector, can_get_size)
@@ -51,91 +58,143 @@ TEST(TDynamicVector, can_get_size)
 
 TEST(TDynamicVector, throws_when_set_element_with_negative_index)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    ASSERT_ANY_THROW(v1[-60]);
 }
 
 TEST(TDynamicVector, throws_when_set_element_with_too_large_index)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    ASSERT_ANY_THROW(v1[60]);
 }
 
 TEST(TDynamicVector, can_assign_vector_to_itself)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    ASSERT_NO_THROW(v1 = v1);
 }
 
 TEST(TDynamicVector, can_assign_vectors_of_equal_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    TDynamicVector<int> v2(10);
+    v2[3] = 1; v2[9]=17;
+    ASSERT_NO_THROW(v1 = v2);
 }
 
 TEST(TDynamicVector, assign_operator_change_vector_size)
 {
-  ADD_FAILURE();
+    //?????
 }
 
 TEST(TDynamicVector, can_assign_vectors_of_different_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    TDynamicVector<int> v2(30);
+    v2[3] = 1; v2[29]=-57;
+    v1 = v2;
+    ASSERT_EQ(v1.size(), 30);
 }
 
 TEST(TDynamicVector, compare_equal_vectors_return_true)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    TDynamicVector<int> v2(10);
+    v2[3] = 1; v2[9]=17;
+    v1 = v2;
+    ASSERT_EQ(v1, v2);
 }
 
 TEST(TDynamicVector, compare_vector_with_itself_return_true)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    ASSERT_EQ(v1,v1);
 }
 
 TEST(TDynamicVector, vectors_with_different_size_are_not_equal)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    TDynamicVector<int> v2(13);
+    v2[3] = 1; v2[9]=17;
+    ASSERT_NE(v1,v2);
 }
 
 TEST(TDynamicVector, can_add_scalar_to_vector)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    ASSERT_NO_THROW(v1+1);
 }
 
 TEST(TDynamicVector, can_subtract_scalar_from_vector)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    ASSERT_NO_THROW(v1-1);
 }
 
 TEST(TDynamicVector, can_multiply_scalar_by_vector)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[5] = 2; v1[9] = -11;
+    ASSERT_NO_THROW(v1*30);
 }
 
 TEST(TDynamicVector, can_add_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[5] = 2; v1[9] = -11;
+    TDynamicVector<int> v2(10);
+    v2[3] = -2; v2[9] = 11;
+    ASSERT_NO_THROW(v1+v2);
 }
 
 TEST(TDynamicVector, cant_add_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[5] = 2; v1[9] = -11;
+    TDynamicVector<int> v2(16);
+    v2[3] = -2; v2[9] = 11;
+    ASSERT_ANY_THROW(v1+v2);
 }
 
 TEST(TDynamicVector, can_subtract_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[5] = 26; v1[9] = -31;
+    TDynamicVector<int> v2(10);
+    v2[3] = -2; v2[9] = 11;
+    ASSERT_NO_THROW(v1-v2);
 }
 
 TEST(TDynamicVector, cant_subtract_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(10);
+    v1[5] = 26; v1[9] = -31;
+    TDynamicVector<int> v2(19);
+    v2[3] = -2; v2[9] = 91;
+    ASSERT_ANY_THROW(v1-v2);
 }
 
 TEST(TDynamicVector, can_multiply_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(6);
+    v1[5] = 6; v1[0] = -1;
+    TDynamicVector<int> v2(6);
+    v2[3] = -2; v2[5] = 11;
+    ASSERT_NO_THROW(v1*v2);
 }
 
 TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+    TDynamicVector<int> v1(6);
+    v1[5] = 6; v1[0] = -1;
+    TDynamicVector<int> v2(30);
+    v2[3] = -2; v2[9] = 11;
+    ASSERT_ANY_THROW(v1*v2);
 }
 
