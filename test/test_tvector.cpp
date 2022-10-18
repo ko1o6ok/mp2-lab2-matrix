@@ -1,6 +1,6 @@
 #include "tmatrix.h"
 
-#include "gtest/gtest.h"
+#include <gtest.h>
 
 TEST(TDynamicVector, can_create_vector_with_positive_length)
 {
@@ -86,7 +86,11 @@ TEST(TDynamicVector, can_assign_vectors_of_equal_size)
 
 TEST(TDynamicVector, assign_operator_change_vector_size)
 {
-    //?????
+    TDynamicVector<int> v1(10);
+    v1[3] = 2; v1[5]=27;
+    TDynamicVector<int> v2(20);
+	v2 = v1;
+	ASSERT_EQ(v2.size(),10);
 }
 
 TEST(TDynamicVector, can_assign_vectors_of_different_size)
